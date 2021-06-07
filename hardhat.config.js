@@ -1,60 +1,44 @@
-const hardhat = require("hardhat/config");
-const { usePlugin } = hardhat;
-
-require("@nomiclabs/hardhat-etherscan");
-require("@nomiclabs/hardhat-truffle5");
-require("./scripts/moloch-tasks");
-require("./scripts/pool-tasks");
-
-const INFURA_API_KEY = "";
-const MAINNET_PRIVATE_KEY = "";
-const ROPSTEN_PRIVATE_KEY = "";
-const ETHERSCAN_API_KEY = "";
+require('@nomiclabs/hardhat-etherscan');
+require('@nomiclabs/hardhat-truffle5');
+require('@nomiclabs/hardhat-waffle');
+require('./scripts/moloch-tasks');
+require('./scripts/pool-tasks');
 
 module.exports = {
   networks: {
     develop: {
-      url: "http://localhost:8545",
+      url: 'http://localhost:8545',
       deployedContracts: {
-        moloch: "",
-        pool: ""
-      }
+        moloch: '',
+        pool: '',
+      },
     },
-    /* ropsten: {
-      url: `https://ropsten.infura.io/v3/${INFURA_API_KEY}`,
-      accounts: [ROPSTEN_PRIVATE_KEY],
-      deployedContracts: {
-        moloch: "",
-        pool: ""
-      }
+    testnet: {
+      url: 'https://data-seed-prebsc-1-s1.binance.org:8545',
+      chainId: 97,
+      gasPrice: 20000000000,
+      accounts: { mnemonic: `${process.env.MNEMONIC}` },
     },
     mainnet: {
-      url: `https://mainnet.infura.io/v3/${INFURA_API_KEY}`,
-      accounts: [MAINNET_PRIVATE_KEY],
-      deployedContracts: {
-        moloch: "0x1fd169A4f5c59ACf79d0Fd5d91D1201EF1Bce9f1", // The original Moloch
-        pool: ""
-      }
-    }, */
-    coverage: {
-      url: "http://localhost:8555"
-    }
+      url: 'https://bsc-dataseed.binance.org/',
+      chainId: 56,
+      gasPrice: 20000000000,
+      accounts: { mnemonic: `${process.env.MNEMONIC}` },
+    },
   },
   solidity: {
-    version: "0.5.3",
+    version: '0.6.12',
     settings: {
       optimizer: {
         enabled: true,
-        runs: 200
-      }
-    }
+        runs: 200,
+      },
+    },
   },
-  etherscan: {
-    // The url for the Etherscan API you want to use.
-    // For example, here we're using the one for the Ropsten test network
-    url: "https://api.etherscan.io/api",
-    // Your API key for Etherscan
-    // Obtain one at https://etherscan.io/
-    apiKey: ETHERSCAN_API_KEY
-  }
+  paths: {
+    sources: './contracts',
+    tests: './test',
+    cache: './cache',
+    artifacts: './artifacts',
+  },
 };

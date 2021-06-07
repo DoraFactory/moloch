@@ -1,9 +1,9 @@
-pragma solidity ^0.5.2;
+pragma solidity >0.6.0;
 
-import "./ERC20.sol";
+import "./oz/ERC20.sol";
 
 contract Token is ERC20 {
-  constructor(uint256 supply) public {
-    _mint(msg.sender, supply);
-  }
+    constructor(uint256 supply) public ERC20("Moloch USD", "MUSD", 18) {
+        _mint(msg.sender, supply);
+    }
 }
