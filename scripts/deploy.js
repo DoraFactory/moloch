@@ -3,11 +3,8 @@ const fs = require('fs');
 require('dotenv').config();
 
 const tokenArtifact = './artifacts/contracts/Token.sol/Token.json';
-// const guildBankArtifiact = './artifacts/contracts/GuildBank.sol/GuildBank.json';
 const molochArtifact = './artifacts/contracts/Moloch.sol/Moloch.json';
-// const poolArtifact = './artifacts/contracts/Pool.sol/MolochPool.json';
 
-// let token, guildBank, moloch, pool;
 let token, moloch;
 
 let provider, wallet, connectedWallet;
@@ -18,8 +15,10 @@ if (process.env.NETWORK == 'testnet') {
   );
   token = '0x38d28227815af0281de9184919C09193898296b5';
   moloch = '0xD485ce0E2c7132211Ac66EEad4309f0a7eA8a436';
-  // guildBank = '0x7DAe8e949896Eb20BB53ee5181aB6382fBdbceBE';
-  // pool = '0xFFFeFCdA48AC6fABb9d0791e529DAbd7B7408805';
+} else if (process.env.NETWORK == 'mainnet') {
+  provider = ethers.getDefaultProvider('https://bsc-dataseed.binance.org/');
+  token = '0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d';
+  moloch = '0x31D3b0573c7AC80fb48D79481E693B49676e968d';
 }
 
 wallet = Wallet.fromMnemonic(process.env.MNEMONIC);
@@ -108,19 +107,11 @@ const deployAll = async () => {
     }
   }
 
-  // if (!guildBank) {
-  //   try {
-  //     guildBank = await deploy(guildBankArtifiact, [token]);
-  //   } catch (e) {
-  //     return;
-  //   }
-  // }
-
   if (!moloch) {
-    const periodDuration = 300; // default = 600 = 10 minutes in seconds (5 periods per day)
-    const votingPeriodLength = 1; // default = 1 period (10 minutes)
-    const gracePeriodLength = 1; // default = 1 period (10 minutes)
-    const abortWindow = 1; // default = 1 period (10 minutes)
+    const periodDuration = 86400; // 1 period per day
+    const votingPeriodLength = 5;
+    const gracePeriodLength = 3;
+    const abortWindow = 3;
     const dilutionBound = 3; // default = 3 - maximum multiplier a YES voter will be obligated to pay in case of mass ragequit
 
     try {
@@ -137,14 +128,6 @@ const deployAll = async () => {
       return;
     }
   }
-
-  // if (!pool) {
-  //   try {
-  //     pool = await deploy(poolArtifact, [moloch]);
-  //   } catch (e) {
-  //     return;
-  //   }
-  // }
 };
 
 deployAll();

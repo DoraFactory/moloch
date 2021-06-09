@@ -28,7 +28,7 @@
   "scripts": {
     "compile": "node_modules/.bin/hardhat compile",
     "clean": "rm -rf './artifacts/'",
-    "deploy": "node_modules/.bin/hardhat run --network testnet scripts/deploy.js",
+    "deploy": "node_modules/.bin/hardhat run --network mainnet scripts/deploy.js",
     "test": "bash scripts/test.sh",
     "gcli": "ganache-cli -l 8000000 -m \"fetch local valve black attend double eye excite planet primary install allow\"",
     "lint:tests": "eslint test/*.js",

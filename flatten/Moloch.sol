@@ -686,14 +686,7 @@ contract Moloch is Ownable {
         );
 
         // compute startingPeriod for proposal
-        uint256 startingPeriod =
-            max(
-                getCurrentPeriod(),
-                proposalQueue.length == 0
-                    ? 0
-                    : proposalQueue[proposalQueue.length.sub(1)].startingPeriod
-            )
-                .add(1);
+        uint256 startingPeriod = getCurrentPeriod().add(1);
 
         // create proposal ...
         Proposal memory proposal =
